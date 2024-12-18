@@ -1,84 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>fam_tree</title>
-<style>
-  canvas {
-    border: 1px solid white;
-    margin-top: 20px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fam_tree</title>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-<button type="button" onclick="window.myDialog.showModal()">Вызов формы</button>
-<h1></h1>
-<dialog id="myDialog">
-  <label for="name">Введите ФИО:</label>
-  <input type="text" id="name" placeholder="Иванов Иван Иванович">
-  <form method="dialog">
-    <button type="button" onclick="submitAndDraw()">Отправить</button>
-  </form>
-</dialog>
-<canvas id="myCanvas" width="150" height="150"></canvas>
+    <h1><button type="button" onclick="window.myDialog.showModal()">Добавить</button><h1/>
 
-<script>
-  const myDialog = document.getElementById("myDialog");
-  window.myDialog = myDialog;
+    <dialog id="myDialog">
+        <label for="name">Введите имя:</label>
+        <p><input type="text" id="name" placeholder="Иван"></p>
+        <form method="dialog">
+            <button id="add_name" type="button" onclick="submitAndDraw()">Добавить</button>
+            <button id="close_name" type="button" onclick="window.myDialog.close()">Отмена</button>
+        </form>
+    </dialog>
 
-  function submitAndDraw() 
-    {
-        const nameInput = document.getElementById("name");
-        const name = nameInput.value;
-        const canvas = document.getElementById("myCanvas");
-        const ctx = canvas.getContext("2d");
-
-        
-            if (name.trim() === "") {
-            alert("Пожалуйста, введите ФИО.");
-            return;
-            }
-
-        
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                ctx.beginPath();
-                ctx.arc(75, 50, 40, 0, 2 * Math.PI);
-                ctx.fillStyle = "lightblue";
-                ctx.fill();
-                ctx.lineWidth = 4;
-                ctx.strokeStyle = "black";
-                ctx.stroke();
-
-        
-        const initials = getNameInitials(name);
-
-                ctx.font = "30px Arial";
-                ctx.fillStyle = "black";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(initials, 75, 50); 
-
-        myDialog.close();
-    }
-
-
-  function getNameInitials(fullName) 
-    {
-        const parts = fullName.split(" ");
-        let initials = "";
-            for (const part of parts) {
-            if (part.length > 0) {
-                initials += part.charAt(0).toUpperCase();
-            }
-            }
-        return initials;
-    }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    window.submitAndDraw = submitAndDraw; 
-  });
-</script>
+    <canvas id="myCanvas" width="150" height="150"></canvas>
+    <script src="script.js"></script>
+    
 </body>
 </html>
